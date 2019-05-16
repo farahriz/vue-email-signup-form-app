@@ -30,4 +30,23 @@ describe('Form.vue', ()=>{
         })
         expect(axios.post).toHaveBeenCalledWith(url, expectedData)
     })
+
+    test('sends post request with enterCompetition checkbox value on submit', ()=> {
+        const axios = {
+            post: jest.fn()
+        }
+        const wrapper = shallowMount(Form, {
+            mocks: { 
+                axios 
+            }
+        })
+        const url = 'http://demo7437963.mockable.io/validate'
+
+        wrapper.find('input[value="no"]').setChecked()
+        wrapper.find('button').trigger('submit')
+
+        expect(axios.post) .toHaveBeenCalledWith(url, expect.objectContaining({
+            enterCompetition: false
+        }))
+    })
 })
